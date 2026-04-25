@@ -1,0 +1,34 @@
+# pipeline.toml - Exemple de configuration DataPipe
+[source]
+format = "csv"
+path = "data/employees.csv"
+delimiter = ","
+
+[destination]
+format = "json"
+path = "output/employees_propres.json"
+
+[[transforms]]
+type = "rename"
+from = "nom_complet"
+to = "nom"
+
+[[transforms]]
+type = "filter"
+column = "departement"
+value = "Informatique"
+operator = "="
+
+[[transforms]]
+type = "cast"
+column = "salaire"
+target_type = "number"
+
+[[transforms]]
+type = "compute"
+new_column = "prime"
+expression = "salaire * 0.1"
+
+[[transforms]]
+type = "drop"
+column = "mot_de_passe"
