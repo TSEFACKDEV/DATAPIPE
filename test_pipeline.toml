@@ -1,0 +1,23 @@
+[source]
+format = "csv"
+path = "data/test.csv"
+delimiter = ","
+
+[destination]
+format = "json"
+path = "output/test_output.json"
+
+[[transforms]]
+type = "rename"
+from = "nom_complet"
+to = "nom"
+
+[[transforms]]
+type = "filter"
+column = "departement"
+value = "Informatique"
+operator = "="
+
+[[transforms]]
+type = "drop"
+column = "mot_de_passe"
