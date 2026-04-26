@@ -1,0 +1,14 @@
+﻿[source]
+format = "csv"
+path = "examples/join_demo/commandes.csv"
+delimiter = ","
+
+[destination]
+format = "json"
+path = "examples/join_demo/resultat.json"
+
+[join]
+right_source = { format = "json", path = "examples/join_demo/clients.json" }
+left_key = "client_id"
+right_key = "id"
+join_type = "inner"
