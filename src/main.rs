@@ -2,6 +2,18 @@ use clap::Parser;
 use anyhow::Result;
 use std::path::PathBuf;
 
+// Import du module pipeline pour accéder à run_pipeline
+mod config;
+mod reader;
+mod transform;
+mod writer;
+mod pipeline;
+mod stats;
+mod validation;
+mod report;
+mod join;
+mod watch;
+
 #[derive(Parser, Debug)]
 #[command(name = "datapipe")]
 #[command(about = "DataPipe - Outil ETL en Rust", long_about = None)]
@@ -32,28 +44,16 @@ fn main() -> Result<()> {
     if cli.watch {
         // TODO: Implémenter le mode watch (NJOH #10)
         println!("👀 Mode watch activé (intervalle: {}s)", cli.interval);
-        // watch_mode(&cli.config, cli.interval)?;
+        // watch::watch_pipeline(&cli.config, cli.interval)?;
     } else if cli.dry_run {
         // TODO: Implémenter le mode dry-run (ATEKOUMBO #09)
         println!("🔍 Mode dry-run activé");
         // dry_run_pipeline(&cli.config)?;
     } else {
-        // Mode normal
-        run_pipeline(&cli.config)?;
+        // Mode normal - Lance le pipeline principal
+        pipeline::run(&cli.config)?;
     }
     
-    Ok(())
-}
-
-fn run_pipeline(config_path: &PathBuf) -> Result<()> {
-    // TODO: Implémenter l'orchestrateur principal (TSEFACK #01)
-    // 1. Charger la configuration TOML
-    // 2. Créer le lecteur approprié
-    // 3. Appliquer les transformations
-    // 4. Écrire les résultats
-    // 5. Afficher les statistiques
-    
-    println!("✅ Pipeline exécuté avec succès!");
     Ok(())
 }
 
