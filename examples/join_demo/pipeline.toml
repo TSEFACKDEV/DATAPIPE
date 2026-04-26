@@ -1,0 +1,36 @@
+# examples/join_demo/pipeline.toml
+# Exemple de jointure : enrichir les commandes avec les infos clients.
+# Commandes (CSV) + Clients (JSON) -> résultat joint (CSV)
+
+[source]
+format = "csv"
+path = "data/commandes.csv"
+delimiter = ","
+
+[destination]
+format = "csv"
+path = "output/commandes_enrichies.csv"
+
+# Jointure : la clé gauche est "client_id", la clé droite est "id"
+[join]
+right_source = { format = "json", path = "data/clients.json" }
+left_key = "client_id"
+right_key = "id"
+join_type = "inner"
+
+# Convertir le montant en nombre
+[[transforms]]
+type = "cast"
+column = "montant"
+target_type = "number"
+
+# Calculer la commission vendeur (5% du montant)
+[[transforms]]
+type = "compute"
+new_column = "commission"
+expression = "montant * 0.05"
+
+# Supprimer la clé de jointure redondante côté droit
+[[transforms]]
+type = "drop"
+column = "id"

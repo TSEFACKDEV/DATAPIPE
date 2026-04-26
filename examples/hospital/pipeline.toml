@@ -1,0 +1,46 @@
+# examples/hospital/pipeline.toml
+# Cas d'usage : Hôpital Central — standardisation des données patients.
+# Entrée : CSV export du logiciel de facturation
+# Sortie : JSON pour l'API du tableau de bord statistique
+
+[source]
+format = "csv"
+path = "data/patients.csv"
+delimiter = ","
+
+[destination]
+format = "json"
+path = "output/patients_hospitalises.json"
+
+# Standardiser les noms de colonnes
+[[transforms]]
+type = "rename"
+from = "NomPatient"
+to = "nom"
+
+[[transforms]]
+type = "rename"
+from = "DateNaiss"
+to = "date_naissance"
+
+# Convertir l'âge en nombre
+[[transforms]]
+type = "cast"
+column = "Age"
+target_type = "number"
+
+# Garder uniquement les patients hospitalisés
+[[transforms]]
+type = "filter"
+column = "Statut"
+value = "Hospitalisé"
+operator = "="
+
+# Supprimer le numéro de sécurité sociale (données sensibles)
+[[transforms]]
+type = "drop"
+column = "NumeroSecu"
+
+# Validation du schéma attendu en sortie
+[schema]
+required_columns = ["nom", "date_naissance", "Age", "Service", "Statut"]

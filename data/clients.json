@@ -1,0 +1,7 @@
+[
+  {"id": "C001", "nom": "Supermarché Mahima", "ville": "Douala", "region": "Littoral", "categorie": "Commerce"},
+  {"id": "C002", "nom": "Pharmacie du Centre", "ville": "Yaoundé", "region": "Centre", "categorie": "Santé"},
+  {"id": "C003", "nom": "École Bilingue de la Paix", "ville": "Bafoussam", "region": "Ouest", "categorie": "Éducation"},
+  {"id": "C004", "nom": "Hôtel des Ambassadeurs", "ville": "Douala", "region": "Littoral", "categorie": "Hôtellerie"},
+  {"id": "C005", "nom": "Librairie Universitaire", "ville": "Yaoundé", "region": "Centre", "categorie": "Commerce"}
+]
