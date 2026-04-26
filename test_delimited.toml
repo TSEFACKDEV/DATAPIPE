@@ -1,0 +1,19 @@
+# Configuration test pour Delimited Reader
+[source]
+format = "delimited"
+path = "data/test_delimited.txt"
+delimiter = "\t"
+
+[destination]
+format = "json"
+path = "output/test_delimited_output.json"
+
+[[transforms]]
+type = "drop"
+column = "mot_de_passe"
+
+[[transforms]]
+type = "filter"
+column = "salaire"
+value = "5000"
+operator = "="

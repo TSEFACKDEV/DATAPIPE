@@ -1,0 +1,5 @@
+nom	departement	salaire	mot_de_passe
+Alice Martin	Informatique	5000	secret123
+Bob Dupont	Ressources Humaines	4000	pass456
+Charlie Bernard	Informatique	5500	pwd789
+Diana Leclerc	Finance	4500	secret999
