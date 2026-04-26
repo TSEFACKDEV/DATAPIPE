@@ -1,15 +1,15 @@
-pub mod csv_writer;
-pub mod json_writer;
-pub mod jsonl_writer;
-pub mod factory;
+//! Module des écrivains (SinkWriter) pour DataPipe...
+//! Définit le contrat que tous les formats de sortie doivent respecter.
 
-use super::reader::Record;
+use crate::reader::Record;
+use anyhow::Result;
 
-/// Trait SinkWriter : contrat pour tous les écrivains
+/// Contrat que tout écrivain de sortie doit implémenter.
 pub trait SinkWriter {
-    /// Écrit un record dans la sortie
-    fn write_record(&mut self, record: &Record) -> anyhow::Result<()>;
-    
-    /// Finalise l'écriture (flush)
-    fn finalize(&mut self) -> anyhow::Result<()>;
+    /// Écrit un seul enregistrement dans la sortie.
+    /// Peut être appelé plusieurs fois (streaming).
+    fn write_record(&mut self, record: &Record) -> Result<()>;
+
+    /// Finalise l'écriture  (flush, fermeture, sérialisation finale).
+    fn finalize(&mut self) -> Result<()>;
 }
