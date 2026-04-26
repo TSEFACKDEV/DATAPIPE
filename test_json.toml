@@ -1,0 +1,14 @@
+# Configuration test pour JSON Reader
+[source]
+format = "json"
+path = "data/test.json"
+
+[destination]
+format = "json"
+path = "output/test_json_output.json"
+
+[[transforms]]
+type = "filter"
+column = "departement"
+value = "Informatique"
+operator = "="
