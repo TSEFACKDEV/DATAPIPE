@@ -1,0 +1,9 @@
+cmd_id,client_id,montant,produit,date
+CMD001,C001,145000,Matériel informatique,2025-01-15
+CMD002,C002,78500,Fournitures médicales,2025-01-17
+CMD003,C003,52000,Manuels scolaires,2025-01-18
+CMD004,C001,230000,Mobilier de bureau,2025-01-20
+CMD005,C004,189000,Équipements cuisine,2025-01-22
+CMD006,C005,34500,Papeterie,2025-01-23
+CMD007,C002,95000,Matériel de laboratoire,2025-01-25
+CMD008,C003,41000,Tableau blanc,2025-01-28

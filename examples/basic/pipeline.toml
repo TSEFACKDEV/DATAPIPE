@@ -1,0 +1,42 @@
+# examples/basic/pipeline.toml
+# Exemple de base : filtrer les employés du département Informatique,
+# calculer leur prime, et supprimer le mot de passe.
+
+[source]
+format = "csv"
+path = "data/employes.csv"
+delimiter = ","
+
+[destination]
+format = "json"
+path = "output/employes_informatique.json"
+
+# Renommer la colonne "nom_complet" en "nom"
+[[transforms]]
+type = "rename"
+from = "nom_complet"
+to = "nom"
+
+# Garder uniquement le département Informatique
+[[transforms]]
+type = "filter"
+column = "departement"
+value = "Informatique"
+operator = "="
+
+# Convertir le salaire en nombre pour les calculs
+[[transforms]]
+type = "cast"
+column = "salaire"
+target_type = "number"
+
+# Calculer la prime (10% du salaire)
+[[transforms]]
+type = "compute"
+new_column = "prime"
+expression = "salaire * 0.1"
+
+# Supprimer le mot de passe (donnée sensible)
+[[transforms]]
+type = "drop"
+column = "mot_de_passe"
