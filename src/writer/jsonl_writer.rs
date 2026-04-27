@@ -16,6 +16,7 @@ impl<W: Write> SinkWriter for JsonLinesSinkWriter<W> {
 
     fn finalize(&mut self) -> anyhow::Result<()> {
         // TODO: Flush final
+        
         todo!("Implémenter finalize JSONL")
     }
 }
