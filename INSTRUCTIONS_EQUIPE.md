@@ -601,7 +601,7 @@ Watch : automatise DataPipe pour les traitements récurrents
 Exemples : montre comment utiliser DataPipe concrètement
 
 Démo : c'est toi qui présentes le projet fini à l'enseignant
-
+                         
 🔄 WORKFLOW GIT POUR CHAQUE MEMBRE
 Commandes à exécuter CHAQUE JOUR :
 bash
