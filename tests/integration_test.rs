@@ -141,7 +141,7 @@ fn test_jsonl_format_strict_une_ligne_par_record() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SECTION 2 : TESTS FACTORY (composant de NGANSOP)
+// SECTION 2 : TESTS FACTORY 
 // ═══════════════════════════════════════════════════════════════════════════════
 
 /// Test 03 : La factory crée le bon type d'écrivain pour "jsonl"
