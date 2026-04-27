@@ -1,0 +1,4 @@
+nom|age|ville|score
+Jean|25|Douala|88.5
+Marie|30|Yaoundé|92.0
+Paul|35|Bafoussam|76.3
