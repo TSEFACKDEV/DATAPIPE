@@ -1,5 +1,5 @@
 // src/pipeline.rs
-// 🎯 ORCHESTRATEUR PRINCIPAL - TSEFACK CALVIN KLEIN
+//  ORCHESTRATEUR PRINCIPAL - TSEFACK CALVIN KLEIN
 // Ce module coordonne l'ensemble du pipeline ETL
 
 use crate::config::{PipelineConfig, SourceConfig};
@@ -21,9 +21,9 @@ use std::path::Path;
 /// 3. Traite chaque record du début à la fin
 /// 4. Affiche un rapport
 pub fn run(config_path: &Path) -> Result<()> {
-    println!("🔄 Initialisation du pipeline...");
+    println!(" Initialisation du pipeline...");
     
-    // 📋 ÉTAPE 1: Charger la configuration TOML
+    //  ÉTAPE 1: Charger la configuration TOML
     let config = PipelineConfig::from_file(config_path)?;
     let mut stats = ExecutionStats::new();
     
@@ -34,7 +34,7 @@ pub fn run(config_path: &Path) -> Result<()> {
     stats.destination_format = config.destination.format.clone();
     stats.transforms_count = config.transforms.len();
     
-    println!("📊 Configuration chargée:");
+    println!(" Configuration chargée:");
     println!("  Source: {} ({})", config.source.format, config.source.path);
     println!("  Destination: {} ({})", config.destination.format, config.destination.path);
     println!("  Transformations: {}", config.transforms.len());
@@ -43,10 +43,10 @@ pub fn run(config_path: &Path) -> Result<()> {
         println!("  Validation: {} colonnes requises", schema.required_columns.len());
     }
     
-    // 📖 ÉTAPE 2: Créer le lecteur selon le format source
+    //  ÉTAPE 2: Créer le lecteur selon le format source
     let reader = create_reader(&config.source)?;
     
-    // ⚙️ ÉTAPE 3: Créer les transformations à partir de la config
+    //  ÉTAPE 3: Créer les transformations à partir de la config
     let transforms: Vec<Box<dyn Transform>> = config
         .transforms
         .iter()
@@ -55,23 +55,23 @@ pub fn run(config_path: &Path) -> Result<()> {
     
     println!("  Transformations créées: {} chaînes", transforms.len());
     
-    // ✍️ ÉTAPE 4: Créer l'écrivain pour la sortie
+    //  ÉTAPE 4: Créer l'écrivain pour la sortie
     let mut writer = create_writer(&config.destination)?;
     
-    println!("\n🚀 Traitement des records...");
+    println!("\n Traitement des records...");
     
-    // 🔄 ÉTAPE 5: Boucle principale - traiter chaque record
+    //  ÉTAPE 5: Boucle principale - traiter chaque record
     for result in reader.records() {
         match result {
             Ok(record) => {
                 stats.records_read += 1;
 
-                // 🔍 Validation de schéma (si configurée)
+                //  Validation de schéma (si configurée)
                 if let Some(ref schema) = config.schema {
                     let errors = validate_record(&record, schema);
                     if !errors.is_empty() {
                         stats.errors_encountered += 1;
-                        eprintln!("⚠️ Validation échouée pour le record #{}: {} erreur(s)",
+                        eprintln!("[WARN] Validation échouée pour le record #{}: {} erreur(s)",
                             stats.records_read, errors.len());
                         for err in &errors {
                             eprintln!("   - {}", err.to_string());
@@ -79,7 +79,7 @@ pub fn run(config_path: &Path) -> Result<()> {
                     }
                 }
 
-                // 📈 Mise à jour des stats par colonne (valeurs numériques)
+                //  Mise à jour des stats par colonne (valeurs numériques)
                 for (col, val) in &record {
                     if let Some(n) = val.as_f64() {
                         stats.update_column_numeric(col, n);
@@ -125,7 +125,7 @@ pub fn run(config_path: &Path) -> Result<()> {
                         Ok(_) => stats.records_written += 1,
                         Err(e) => {
                             stats.errors_encountered += 1;
-                            eprintln!("⚠️ Erreur lors de l'écriture: {}", e);
+                            eprintln!("[WARN] Erreur lors de l'écriture: {}", e);
                         }
                     }
                 }
@@ -137,24 +137,24 @@ pub fn run(config_path: &Path) -> Result<()> {
             }
             Err(e) => {
                 stats.errors_encountered += 1;
-                eprintln!("⚠️ Erreur lors de la lecture: {}", e);
+                eprintln!("[WARN] Erreur lors de la lecture: {}", e);
             }
         }
     }
     
-    // 📝 ÉTAPE 6: Finaliser l'écriture (flush des buffers)
+    //  ÉTAPE 6: Finaliser l'écriture (flush des buffers)
     writer.finalize()?;
     
-    // 📊 ÉTAPE 7: Afficher le rapport d'exécution
+    //  ÉTAPE 7: Afficher le rapport d'exécution
     stats.stop();
-    println!("\n✅ Pipeline terminé!");
+    println!("\n[OK] Pipeline terminé!");
     stats.print_report();
     
     Ok(())
 }
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// 🏭 FACTORIES - Fonctions pour créer les composants
+//  FACTORIES - Fonctions pour créer les composants
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 /// Factory pour créer le bon lecteur selon le format

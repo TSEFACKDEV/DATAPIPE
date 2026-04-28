@@ -8,7 +8,7 @@ use std::time::Duration;
 use anyhow::Result;
 
 pub fn watch_mode(config_path: &Path, interval_secs: u64) -> Result<()> {
-    println!("👀 Mode watch activé - Surveillance toutes les {}s", interval_secs);
+    println!(" Mode watch activé - Surveillance toutes les {}s", interval_secs);
     
     let mut last_modified = get_file_mtime(config_path)?;
     

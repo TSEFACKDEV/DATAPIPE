@@ -246,7 +246,7 @@ Les erreurs de validation sont signalées dans la console (`stderr`) sans interr
 À la fin de chaque exécution, un rapport s'affiche :
 
 ```
-✅ Pipeline terminé!
+[OK] Pipeline terminé!
 
 ╔════════════════════════════════════════════════╗
 ║         RAPPORT D'EXÉCUTION DATAPIPE           ║

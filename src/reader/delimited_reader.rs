@@ -24,23 +24,23 @@ impl SourceReader for DelimitedReader {
 
 /// Charge un fichier texte délimité et retourne les records
 fn load_delimited_records(path: &str, delimiter: u8) -> Result<Vec<Record>> {
-    // 1️⃣ Ouvrir le fichier
+    // 1. Ouvrir le fichier
     let file = File::open(path)
         .map_err(|e| anyhow!("Impossible de lire {}: {}", path, e))?;
 
-    // 2️⃣ Créer un lecteur CSV avec le délimiteur spécifié
+    // 2. Créer un lecteur CSV avec le délimiteur spécifié
     let mut reader = ReaderBuilder::new()
         .delimiter(delimiter)
         .from_reader(file);
 
-    // 3️⃣ Lire les en-têtes
+    // 3. Lire les en-têtes
     let headers = reader.headers()
         .map_err(|e| anyhow!("Erreur lecture en-têtes de {}: {}", path, e))?
         .clone();
 
     let header_names: Vec<String> = headers.iter().map(|s| s.to_string()).collect();
 
-    // 4️⃣ Convertir chaque ligne en Record
+    // 4. Convertir chaque ligne en Record
     let mut records = Vec::new();
     
     for (line_num, result) in reader.records().enumerate() {

@@ -15,10 +15,10 @@
 // ─── AVANTAGES vs JSON classique ─────────────────────────────────────────────
 //
 // JSON classique (tableau) requiert de TOUT charger avant de traiter.
-// Sur un fichier de 10 Go → 10 Go de RAM nécessaires. ❌
+// Sur un fichier de 10 Go → 10 Go de RAM nécessaires. [ERREUR]
 //
 // JSONL → on traite LIGNE PAR LIGNE.
-// Mémoire constante quelle que soit la taille du fichier → STREAMING PUR. ✅
+// Mémoire constante quelle que soit la taille du fichier → STREAMING PUR. [OK]
 
 use crate::reader::Record;
 use crate::writer::SinkWriter;

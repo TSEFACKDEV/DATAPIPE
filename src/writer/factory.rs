@@ -86,7 +86,7 @@ pub fn create_writer(config: &DestinationConfig) -> Result<Box<dyn SinkWriter>> 
         "json" => {
             // JsonSinkWriter accumule tous les records en mémoire puis écrit
             // un tableau JSON complet lors de finalize().
-            // ⚠️  Attention : non adapté aux très gros volumes (100k+ records).
+            // [WARN]  Attention : non adapté aux très gros volumes (100k+ records).
             // Pour les gros volumes, préférer "jsonl".
             let writer = JsonSinkWriter::new(&config.path);
             Ok(Box::new(writer))

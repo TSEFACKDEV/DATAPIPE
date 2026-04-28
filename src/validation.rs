@@ -228,7 +228,7 @@ pub fn print_validation_errors(errors: &[ValidationError], record_index: u64) {
     }
 
     eprintln!(
-        "  ⚠️  Record #{} — {} erreur(s) de validation :",
+        "  [WARN]  Record #{} — {} erreur(s) de validation :",
         record_index,
         errors.len()
     );

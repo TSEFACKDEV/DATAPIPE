@@ -56,7 +56,7 @@ pub fn generate_html_report(
     // Écrire le fichier HTML sur le disque
     fs::write(output_path, &html)?;
 
-    println!("📄 Rapport HTML généré : {}", output_path);
+    println!(" Rapport HTML généré : {}", output_path);
     Ok(())
 }
 
@@ -555,7 +555,7 @@ fn build_header(stats: &ExecutionStats) -> String {
     format!(
         r#"<div class="header">
             <div class="header-left">
-                <h1>⚡ DataPipe</h1>
+                <h1> DataPipe</h1>
                 <div class="subtitle">Rapport d'exécution du pipeline ETL</div>
                 <div class="subtitle" style="margin-top:6px; color:#64748b; font-size:0.8rem;">
                     {} → {}
@@ -589,7 +589,7 @@ fn build_status_banner(stats: &ExecutionStats) -> String {
     let (class, icon, message) = if stats.errors_encountered == 0 && records_perdus == 0 {
         (
             "success",
-            "🎉",
+            "",
             format!(
                 "Pipeline terminé avec succès — {} record(s) traité(s) sans erreur ni anomalie",
                 stats.records_written
@@ -598,7 +598,7 @@ fn build_status_banner(stats: &ExecutionStats) -> String {
     } else if stats.errors_encountered > 0 {
         (
             "error",
-            "❌",
+            "[ERREUR]",
             format!(
                 "Pipeline terminé avec {} erreur(s) — vérifier les logs pour plus de détails",
                 stats.errors_encountered
@@ -607,7 +607,7 @@ fn build_status_banner(stats: &ExecutionStats) -> String {
     } else {
         (
             "warning",
-            "⚠️",
+            "[WARN]",
             format!(
                 "Pipeline terminé — {} record(s) perdu(s) détecté(s), investigation recommandée",
                 records_perdus.abs()
@@ -658,31 +658,31 @@ fn build_metric_cards(stats: &ExecutionStats) -> String {
     format!(
         r#"<div class="cards-grid">
             <div class="card card-blue">
-                <span class="card-icon">📥</span>
+                <span class="card-icon"></span>
                 <span class="card-label">Records lus</span>
                 <span class="card-value">{}</span>
                 <span class="card-sub">depuis la source</span>
             </div>
             <div class="card card-green">
-                <span class="card-icon">📤</span>
+                <span class="card-icon"></span>
                 <span class="card-label">Records écrits</span>
                 <span class="card-value">{}</span>
                 <span class="card-sub">{}</span>
             </div>
             <div class="card card-orange">
-                <span class="card-icon">🚫</span>
+                <span class="card-icon"></span>
                 <span class="card-label">Records filtrés</span>
                 <span class="card-value">{}</span>
                 <span class="card-sub">{}</span>
             </div>
             <div class="card card-red">
-                <span class="card-icon">⚠️</span>
+                <span class="card-icon">[WARN]</span>
                 <span class="card-label">Erreurs</span>
                 <span class="card-value">{}</span>
                 <span class="card-sub">pendant l'exécution</span>
             </div>
             <div class="card card-purple">
-                <span class="card-icon">⏱️</span>
+                <span class="card-icon"></span>
                 <span class="card-label">Durée</span>
                 <span class="card-value">{}</span>
                 <span class="card-sub">temps total</span>
@@ -734,7 +734,7 @@ fn build_performance_section(stats: &ExecutionStats) -> String {
     format!(
         r#"<div class="section">
             <div class="section-header">
-                <span class="section-icon">⚡</span>
+                <span class="section-icon"></span>
                 <h2>Performance</h2>
             </div>
             <div class="section-body">
@@ -759,7 +759,7 @@ fn build_performance_section(stats: &ExecutionStats) -> String {
 
                 <div class="progress-row">
                     <div class="progress-label">
-                        <span>📤 Records écrits</span>
+                        <span> Records écrits</span>
                         <span>{pct_ecrits}%</span>
                     </div>
                     <div class="progress-bar-bg">
@@ -768,7 +768,7 @@ fn build_performance_section(stats: &ExecutionStats) -> String {
                 </div>
                 <div class="progress-row">
                     <div class="progress-label">
-                        <span>🚫 Records filtrés</span>
+                        <span> Records filtrés</span>
                         <span>{pct_filtres}%</span>
                     </div>
                     <div class="progress-bar-bg">
@@ -777,7 +777,7 @@ fn build_performance_section(stats: &ExecutionStats) -> String {
                 </div>
                 <div class="progress-row">
                     <div class="progress-label">
-                        <span>⚠️ Taux d'erreur</span>
+                        <span>[WARN] Taux d'erreur</span>
                         <span>{pct_erreurs}%</span>
                     </div>
                     <div class="progress-bar-bg">
@@ -816,7 +816,7 @@ fn build_pipeline_info(stats: &ExecutionStats) -> String {
     format!(
         r#"<div class="section">
             <div class="section-header">
-                <span class="section-icon">🗂️</span>
+                <span class="section-icon"></span>
                 <h2>Informations pipeline</h2>
             </div>
             <div class="section-body">
@@ -881,7 +881,7 @@ fn build_column_stats(stats: &ExecutionStats) -> String {
             format!(
                 r#"<div class="col-stat-row">
                     <span class="col-stat-key">Valeurs nulles</span>
-                    <span class="col-stat-warn">⚠️ {}</span>
+                    <span class="col-stat-warn">[WARN] {}</span>
                 </div>"#,
                 col.null_count
             )
@@ -889,7 +889,7 @@ fn build_column_stats(stats: &ExecutionStats) -> String {
             format!(
                 r#"<div class="col-stat-row">
                     <span class="col-stat-key">Valeurs nulles</span>
-                    <span class="col-stat-val">0 ✅</span>
+                    <span class="col-stat-val">0 [OK]</span>
                 </div>"#
             )
         };
@@ -918,7 +918,7 @@ fn build_column_stats(stats: &ExecutionStats) -> String {
 
         cards.push_str(&format!(
             r#"<div class="col-stat-card">
-                <div class="col-stat-name">📌 {}</div>
+                <div class="col-stat-name"> {}</div>
                 <div class="col-stat-row">
                     <span class="col-stat-key">Valeurs non-nulles</span>
                     <span class="col-stat-val">{}</span>
@@ -936,7 +936,7 @@ fn build_column_stats(stats: &ExecutionStats) -> String {
     format!(
         r#"<div class="section">
             <div class="section-header">
-                <span class="section-icon">🔬</span>
+                <span class="section-icon"></span>
                 <h2>Statistiques par colonne</h2>
             </div>
             <div class="section-body">
@@ -994,7 +994,7 @@ fn build_preview_table(preview: &[Record]) -> String {
     format!(
         r#"<div class="section">
             <div class="section-header">
-                <span class="section-icon">👁️</span>
+                <span class="section-icon"></span>
                 <h2>Aperçu des données ({} record(s))</h2>
             </div>
             <div class="section-body" style="padding:0;">

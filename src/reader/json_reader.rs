@@ -22,19 +22,19 @@ impl SourceReader for JsonReader {
 
 /// Charge un fichier JSON et retourne les records
 fn load_json_records(path: &str) -> Result<Vec<Record>> {
-    // 1️⃣ Lire le fichier
+    // 1. Lire le fichier
     let content = fs::read_to_string(path)
         .map_err(|e| anyhow!("Impossible de lire {}: {}", path, e))?;
 
-    // 2️⃣ Parser le JSON
+    // 2. Parser le JSON
     let json_value: Value = serde_json::from_str(&content)
         .map_err(|e| anyhow!("Erreur de parsing JSON dans {}: {}", path, e))?;
 
-    // 3️⃣ S'assurer que c'est un array
+    // 3. S'assurer que c'est un array
     let array = json_value.as_array()
         .ok_or_else(|| anyhow!("Le fichier JSON doit contenir un array"))?;
 
-    // 4️⃣ Convertir chaque élément en Record
+    // 4. Convertir chaque élément en Record
     let mut records = Vec::new();
     for (idx, item) in array.iter().enumerate() {
         let obj = item.as_object()

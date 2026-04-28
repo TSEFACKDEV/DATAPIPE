@@ -327,7 +327,7 @@ impl ExecutionStats {
 
         // ── En-tête ──────────────────────────────────────────────────────────
         println!("\n{}", sep_double);
-        println!("       📊  RAPPORT D'EXÉCUTION — DATAPIPE");
+        println!("         RAPPORT D'EXÉCUTION — DATAPIPE");
         println!("{}", sep_double);
 
         // ── Section 1 : Informations sur le pipeline ─────────────────────────
@@ -335,26 +335,26 @@ impl ExecutionStats {
         // Affiche d'où viennent les données, où elles vont,
         // et combien de transformations ont été appliquées.
         //
-        println!("  🗂️   PIPELINE");
+        println!("     PIPELINE");
         println!("{}", sep_simple);
 
         if !self.source_path.is_empty() {
             println!(
-                "  📂  Source        : {} ({})",
+                "    Source        : {} ({})",
                 self.source_path, self.source_format
             );
         }
 
         if !self.destination_path.is_empty() {
             println!(
-                "  💾  Destination   : {} ({})",
+                "    Destination   : {} ({})",
                 self.destination_path, self.destination_format
             );
         }
 
         // Nombre de transformations configurées dans le fichier TOML
         println!(
-            "  ⚙️   Transformations configurées : {}",
+            "     Transformations configurées : {}",
             self.transforms_count
         );
 
@@ -365,24 +365,24 @@ impl ExecutionStats {
         // Affiche l'heure de début, l'heure de fin et la durée totale.
         // Utile pour retrouver dans les logs quand un pipeline s'est exécuté.
         //
-        println!("  🕐   HORODATAGE");
+        println!("     HORODATAGE");
         println!("{}", sep_simple);
 
         println!(
-            "  🟢  Début         : {}",
+            "    Début         : {}",
             Self::format_timestamp(self.start_timestamp)
         );
         println!(
-            "  🔴  Fin           : {}",
+            "    Fin           : {}",
             Self::format_timestamp(self.end_timestamp)
         );
 
         // Affichage intelligent de la durée : ms ou secondes selon la valeur
         if self.duration_ms < 1000 {
-            println!("  ⏱️   Durée         : {}ms", self.duration_ms);
+            println!("     Durée         : {}ms", self.duration_ms);
         } else {
             println!(
-                "  ⏱️   Durée         : {:.2}s",
+                "     Durée         : {:.2}s",
                 self.duration_ms as f64 / 1000.0
             );
         }
@@ -394,19 +394,19 @@ impl ExecutionStats {
         // Vue d'ensemble du flux de données à travers le pipeline.
         // Permet de vérifier que tous les records ont bien été traités.
         //
-        println!("  📦   RECORDS");
+        println!("     RECORDS");
         println!("{}", sep_simple);
 
-        println!("  📥  Lus              : {}", self.records_read);
-        println!("  ⚙️   Transformés      : {}", self.records_transformed);
-        println!("  🚫  Filtrés           : {}", self.records_filtered);
-        println!("  📤  Écrits            : {}", self.records_written);
+        println!("    Lus              : {}", self.records_read);
+        println!("     Transformés      : {}", self.records_transformed);
+        println!("    Filtrés           : {}", self.records_filtered);
+        println!("    Écrits            : {}", self.records_written);
 
         // Erreurs : on distingue "aucune erreur" d'un nombre d'erreurs
         if self.errors_encountered > 0 {
-            println!("  ⚠️   Erreurs           : {}", self.errors_encountered);
+            println!("  [WARN]   Erreurs           : {}", self.errors_encountered);
         } else {
-            println!("  ✅  Erreurs           : 0");
+            println!("  [OK]  Erreurs           : 0");
         }
 
         println!("{}", sep_simple);
@@ -419,7 +419,7 @@ impl ExecutionStats {
         //   - Taux d'écriture faible → peu de données arrivent à destination
         //
         if self.records_read > 0 {
-            println!("  📊   TAUX");
+            println!("     TAUX");
             println!("{}", sep_simple);
 
             let taux_filtrage =
@@ -430,13 +430,13 @@ impl ExecutionStats {
                 (self.errors_encountered as f64 / self.records_read as f64) * 100.0;
 
             // Pourcentage de records éliminés par les filtres
-            println!("  🚫  Taux de filtrage  : {:.1}%", taux_filtrage);
+            println!("    Taux de filtrage  : {:.1}%", taux_filtrage);
 
             // Pourcentage de records ayant atteint la destination
-            println!("  📈  Taux d'écriture   : {:.1}%", taux_ecriture);
+            println!("    Taux d'écriture   : {:.1}%", taux_ecriture);
 
             // Pourcentage d'erreurs — idéalement doit être 0%
-            println!("  ⚠️   Taux d'erreur     : {:.2}%", taux_erreur);
+            println!("  [WARN]   Taux d'erreur     : {:.2}%", taux_erreur);
 
             println!("{}", sep_simple);
         }
@@ -447,7 +447,7 @@ impl ExecutionStats {
         // Un débit très faible peut indiquer un goulot d'étranglement
         // (fichier trop grand, transformation lente, disque lent, etc.)
         //
-        println!("  ⚡   PERFORMANCE");
+        println!("     PERFORMANCE");
         println!("{}", sep_simple);
 
         let debit = if self.duration_ms > 0 {
@@ -456,14 +456,14 @@ impl ExecutionStats {
             self.records_written as f64
         };
 
-        println!("  🚀  Débit             : {:.0} records/s", debit);
+        println!("    Débit             : {:.0} records/s", debit);
 
         // Estimation du volume : chaque record ≈ 256 octets en mémoire (estimation)
         let volume_kb = (self.records_read as f64 * 256.0) / 1024.0;
         if volume_kb < 1024.0 {
-            println!("  💽  Volume estimé     : {:.1} Ko", volume_kb);
+            println!("    Volume estimé     : {:.1} Ko", volume_kb);
         } else {
-            println!("  💽  Volume estimé     : {:.2} Mo", volume_kb / 1024.0);
+            println!("    Volume estimé     : {:.2} Mo", volume_kb / 1024.0);
         }
 
         println!("{}", sep_simple);
@@ -476,10 +476,10 @@ impl ExecutionStats {
         //
         let perdus = self.records_perdus();
         if perdus != 0 {
-            println!("  🔍   ANOMALIES DÉTECTÉES");
+            println!("     ANOMALIES DÉTECTÉES");
             println!("{}", sep_simple);
             println!(
-                "  ❓  Records perdus    : {} (ni écrits, ni filtrés, ni en erreur)",
+                "    Records perdus    : {} (ni écrits, ni filtrés, ni en erreur)",
                 perdus.abs()
             );
             println!("      → Vérifier la logique du pipeline !");
@@ -501,7 +501,7 @@ impl ExecutionStats {
         //   - Des colonnes constantes (min == max)
         //
         if !self.column_stats.is_empty() {
-            println!("  🔬   STATISTIQUES PAR COLONNE");
+            println!("     STATISTIQUES PAR COLONNE");
             println!("{}", sep_simple);
 
             // On trie les colonnes par nom pour un affichage cohérent
@@ -510,16 +510,16 @@ impl ExecutionStats {
             colonnes.sort_by_key(|(name, _)| name.as_str());
 
             for (nom, stats) in colonnes {
-                println!("  📌  Colonne : \"{}\"", nom);
+                println!("    Colonne : \"{}\"", nom);
 
                 // Nombre de valeurs non-nulles rencontrées
                 println!("      • Valeurs non-nulles  : {}", stats.count);
 
                 // Nombre de valeurs nulles/manquantes
                 if stats.null_count > 0 {
-                    println!("      • Valeurs nulles      : {} ⚠️", stats.null_count);
+                    println!("      • Valeurs nulles      : {} [WARN]", stats.null_count);
                 } else {
-                    println!("      • Valeurs nulles      : 0 ✅");
+                    println!("      • Valeurs nulles      : 0 [OK]");
                 }
 
                 // Statistiques numériques (min, max, moyenne) si disponibles
@@ -529,7 +529,7 @@ impl ExecutionStats {
 
                     // Alerte si min == max : colonne peut-être constante
                     if (max - min).abs() < f64::EPSILON {
-                        println!("      • ⚠️  Min == Max : colonne potentiellement constante");
+                        println!("      • [WARN]  Min == Max : colonne potentiellement constante");
                     }
                 }
 
@@ -549,20 +549,20 @@ impl ExecutionStats {
         println!("{}", sep_double);
 
         if self.errors_encountered == 0 && perdus == 0 {
-            println!("  🎉  STATUT : SUCCÈS — pipeline terminé sans erreur ni anomalie");
+            println!("    STATUT : SUCCÈS — pipeline terminé sans erreur ni anomalie");
         } else if self.errors_encountered > 0 && perdus == 0 {
             println!(
-                "  ❌  STATUT : TERMINÉ AVEC {} ERREUR(S)",
+                "  [ERREUR]  STATUT : TERMINÉ AVEC {} ERREUR(S)",
                 self.errors_encountered
             );
         } else if self.errors_encountered == 0 && perdus != 0 {
             println!(
-                "  ⚠️   STATUT : TERMINÉ — {} record(s) perdu(s) détecté(s)",
+                "  [WARN]   STATUT : TERMINÉ — {} record(s) perdu(s) détecté(s)",
                 perdus.abs()
             );
         } else {
             println!(
-                "  ❌  STATUT : TERMINÉ AVEC {} ERREUR(S) ET {} ANOMALIE(S)",
+                "  [ERREUR]  STATUT : TERMINÉ AVEC {} ERREUR(S) ET {} ANOMALIE(S)",
                 self.errors_encountered,
                 perdus.abs()
             );
