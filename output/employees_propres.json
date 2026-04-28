@@ -1,0 +1,42 @@
+[
+  {
+    "age": 25,
+    "departement": "Informatique",
+    "nom": "Jean Mbarga",
+    "prime": 5000.0,
+    "salaire": 50000.0,
+    "ville": "Douala"
+  },
+  {
+    "age": 35,
+    "departement": "Informatique",
+    "nom": "Paul Fotso",
+    "prime": 5500.0,
+    "salaire": 55000.0,
+    "ville": "Bafoussam"
+  },
+  {
+    "age": 40,
+    "departement": "Informatique",
+    "nom": "Thomas Essola",
+    "prime": 6500.0,
+    "salaire": 65000.0,
+    "ville": "Douala"
+  },
+  {
+    "age": 29,
+    "departement": "Informatique",
+    "nom": "Sarah Kom",
+    "prime": 5200.0,
+    "salaire": 52000.0,
+    "ville": "Douala"
+  },
+  {
+    "age": 31,
+    "departement": "Informatique",
+    "nom": "Ingrid Dang",
+    "prime": 5300.0,
+    "salaire": 53000.0,
+    "ville": "Douala"
+  }
+]

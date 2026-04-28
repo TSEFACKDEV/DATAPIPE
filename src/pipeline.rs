@@ -11,6 +11,7 @@ use crate::reader::delimited_reader::DelimitedReader;
 use crate::transform::Transform;
 use crate::transform::factory::create_transform;
 use crate::writer::factory::create_writer;
+use crate::validation::validate_record;
 use anyhow::{Result, anyhow};
 use std::path::Path;
 
@@ -26,10 +27,21 @@ pub fn run(config_path: &Path) -> Result<()> {
     let config = PipelineConfig::from_file(config_path)?;
     let mut stats = ExecutionStats::new();
     
+    // Renseigner les infos de source/destination dans les stats
+    stats.source_path = config.source.path.clone();
+    stats.source_format = config.source.format.clone();
+    stats.destination_path = config.destination.path.clone();
+    stats.destination_format = config.destination.format.clone();
+    stats.transforms_count = config.transforms.len();
+    
     println!("📊 Configuration chargée:");
     println!("  Source: {} ({})", config.source.format, config.source.path);
     println!("  Destination: {} ({})", config.destination.format, config.destination.path);
     println!("  Transformations: {}", config.transforms.len());
+    
+    if let Some(ref schema) = config.schema {
+        println!("  Validation: {} colonnes requises", schema.required_columns.len());
+    }
     
     // 📖 ÉTAPE 2: Créer le lecteur selon le format source
     let reader = create_reader(&config.source)?;
@@ -53,19 +65,39 @@ pub fn run(config_path: &Path) -> Result<()> {
         match result {
             Ok(record) => {
                 stats.records_read += 1;
+
+                // 🔍 Validation de schéma (si configurée)
+                if let Some(ref schema) = config.schema {
+                    let errors = validate_record(&record, schema);
+                    if !errors.is_empty() {
+                        stats.errors_encountered += 1;
+                        eprintln!("⚠️ Validation échouée pour le record #{}: {} erreur(s)",
+                            stats.records_read, errors.len());
+                        for err in &errors {
+                            eprintln!("   - {}", err.to_string());
+                        }
+                    }
+                }
+
+                // 📈 Mise à jour des stats par colonne (valeurs numériques)
+                for (col, val) in &record {
+                    if let Some(n) = val.as_f64() {
+                        stats.update_column_numeric(col, n);
+                    } else if val.is_null() || val.as_str().map(|s| s.is_empty()).unwrap_or(false) {
+                        stats.record_column_null(col);
+                    }
+                }
                 
                 // Envelopper le record dans un Option pour le pipeline
                 let mut record_option: Option<_> = Some(record);
+                let had_transforms = !transforms.is_empty();
                 
                 // Appliquer chaque transformation en chaîne
                 for transform in &transforms {
                     record_option = match record_option {
                         Some(rec) => {
                             match transform.apply(rec) {
-                                Some(new_rec) => {
-                                    stats.records_transformed += 1;
-                                    Some(new_rec)
-                                }
+                                Some(new_rec) => Some(new_rec),
                                 None => {
                                     // Record a été filtré
                                     stats.records_filtered += 1;
@@ -80,6 +112,11 @@ pub fn run(config_path: &Path) -> Result<()> {
                     if record_option.is_none() {
                         break;
                     }
+                }
+                
+                // Compter une seule fois les records transformés (non filtrés)
+                if had_transforms && record_option.is_some() {
+                    stats.records_transformed += 1;
                 }
                 
                 // Écrire le record si pas filtré
@@ -121,6 +158,7 @@ pub fn run(config_path: &Path) -> Result<()> {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 /// Factory pour créer le bon lecteur selon le format
+/// Exposée publiquement pour permettre le dry-run et les tests.
 /// 
 /// # Arguments
 /// * `config` - SourceConfig contenant format et chemin
@@ -132,7 +170,7 @@ pub fn run(config_path: &Path) -> Result<()> {
 /// - "csv" → CsvReader
 /// - "json" → JsonReader
 /// - "delimited" → DelimitedReader (tabulation, point-virgule, etc.)
-fn create_reader(config: &SourceConfig) -> Result<Box<dyn SourceReader>> {
+pub fn create_reader(config: &SourceConfig) -> Result<Box<dyn SourceReader>> {
     match config.format.to_lowercase().as_str() {
         "csv" => {
             let delimiter = config
@@ -177,17 +215,45 @@ fn create_reader(config: &SourceConfig) -> Result<Box<dyn SourceReader>> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::config::SourceConfig;
 
     #[test]
-    fn test_pipeline_initialization() {
-        // TODO: Ajouter tests d'intégration (TSEFACK #01)
-        // - Test avec fichier TOML valide
-        // - Test avec fichier TOML invalide
-        // - Test avec fichiers sources manquants
+    fn test_reader_factory_csv() {
+        let config = SourceConfig {
+            format: "csv".to_string(),
+            path: "data/test.csv".to_string(),
+            delimiter: Some(",".to_string()),
+        };
+        assert!(create_reader(&config).is_ok());
     }
 
     #[test]
-    fn test_reader_factory() {
-        // TODO: Tester la création de lecteurs
+    fn test_reader_factory_json() {
+        let config = SourceConfig {
+            format: "json".to_string(),
+            path: "data/test.json".to_string(),
+            delimiter: None,
+        };
+        assert!(create_reader(&config).is_ok());
+    }
+
+    #[test]
+    fn test_reader_factory_delimited_missing_delimiter() {
+        let config = SourceConfig {
+            format: "delimited".to_string(),
+            path: "data/villes.txt".to_string(),
+            delimiter: None, // manquant → doit retourner Err
+        };
+        assert!(create_reader(&config).is_err());
+    }
+
+    #[test]
+    fn test_reader_factory_unknown_format() {
+        let config = SourceConfig {
+            format: "parquet".to_string(),
+            path: "data/file.parquet".to_string(),
+            delimiter: None,
+        };
+        assert!(create_reader(&config).is_err());
     }
 }

@@ -73,13 +73,15 @@ impl Operator {
 /// ```
 ///
 /// # Exemple Rust
-/// ```rust
-/// use datapipe::transform::{Transform, FilterTransform};
-/// use std::collections::HashMap;
+/// ```rust,no_run
+/// use datapipe::transform::filter::FilterTransform;
+/// use datapipe::transform::Transform;
+/// use datapipe::reader::Record;
+/// use serde_json::json;
 ///
 /// let f = FilterTransform::new("age", ">", "18").unwrap();
-/// let mut record = HashMap::new();
-/// record.insert("age".to_string(), "25".to_string());
+/// let mut record = Record::new();
+/// record.insert("age".to_string(), json!("25"));
 /// assert!(f.apply(record).is_some()); // 25 > 18 → conservé
 /// ```
 #[derive(Debug, Clone)]

@@ -47,7 +47,11 @@ impl SinkWriter for CsvSinkWriter {
             .map(|h| {
                 record
                     .get(h)
-                    .map(|v| v.to_string())
+                    .map(|v| match v {
+                        // Extraire la chaîne brute pour éviter les guillemets JSON ("Alice" → Alice)
+                        serde_json::Value::String(s) => s.clone(),
+                        other => other.to_string(),
+                    })
                     .unwrap_or_default()
             })
             .collect();

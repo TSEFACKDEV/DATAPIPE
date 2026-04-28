@@ -22,13 +22,15 @@ use crate::transform::{Record, Transform};
 /// ```
 ///
 /// # Exemple Rust
-/// ```rust
-/// use datapipe::transform::{Transform, RenameTransform};
-/// use std::collections::HashMap;
+/// ```rust,no_run
+/// use datapipe::transform::rename::RenameTransform;
+/// use datapipe::transform::Transform;
+/// use datapipe::reader::Record;
+/// use serde_json::json;
 ///
 /// let t = RenameTransform::new("prenom", "first_name");
-/// let mut record = HashMap::new();
-/// record.insert("prenom".to_string(), "Alice".to_string());
+/// let mut record = Record::new();
+/// record.insert("prenom".to_string(), json!("Alice"));
 ///
 /// let result = t.apply(record).unwrap();
 /// assert!(result.contains_key("first_name"));

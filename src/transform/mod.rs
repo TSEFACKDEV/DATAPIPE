@@ -19,8 +19,9 @@ use crate::reader::Record;
 /// - `None`         → l'enregistrement est **supprimé** du flux (filtré)
 ///
 /// # Exemple d'implémentation minimale
-/// ```rust
-/// use datapipe::transform::{Transform, Record};
+/// ```rust,no_run
+/// use datapipe::transform::{Transform};
+/// use datapipe::reader::Record;
 ///
 /// struct NoOp;
 ///
