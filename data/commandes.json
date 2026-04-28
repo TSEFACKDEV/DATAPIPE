@@ -1,0 +1,30 @@
+[
+  {
+    "num_commande": "CMD001",
+    "client": "Alice",
+    "date": "2024-01-15",
+    "articles": 3,
+    "montant_total": 250.50
+  },
+  {
+    "num_commande": "CMD002",
+    "client": "Bob",
+    "date": "2024-01-20",
+    "articles": 1,
+    "montant_total": 99.99
+  },
+  {
+    "num_commande": "CMD003",
+    "client": "Charlie",
+    "date": "2024-02-05",
+    "articles": 5,
+    "montant_total": 500.75
+  },
+  {
+    "num_commande": "CMD004",
+    "client": "Diana",
+    "date": "2024-02-10",
+    "articles": 2,
+    "montant_total": 150.00
+  }
+]

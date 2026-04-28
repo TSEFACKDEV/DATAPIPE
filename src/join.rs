@@ -1,4 +1,6 @@
-﻿use crate::reader::Record;
+﻿#![allow(dead_code)]
+
+use crate::reader::Record;
 use std::collections::HashMap;
 use serde_json::Value;
 

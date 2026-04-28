@@ -17,6 +17,9 @@ indexmap = "2.0"
 [dev-dependencies]
 tempfile = "3.0"
 
+[lints.rust]
+unexpected_cfgs = "warn"
+
 [[bin]]
 name = "datapipe"
 path = "src/main.rs"

@@ -51,6 +51,7 @@ pub struct ColumnStats {
 impl ColumnStats {
     /// Met à jour les stats d'une colonne avec une nouvelle valeur numérique.
     /// Appelé pour chaque valeur f64 rencontrée dans la colonne.
+    #[allow(dead_code)]
     pub fn update_numeric(&mut self, val: f64) {
         self.count += 1;
         self.sum += val;
@@ -69,6 +70,7 @@ impl ColumnStats {
     }
 
     /// Enregistre une valeur nulle dans cette colonne.
+    #[allow(dead_code)]
     pub fn record_null(&mut self) {
         self.null_count += 1;
     }
@@ -212,6 +214,7 @@ impl ExecutionStats {
     /// * `val` - Valeur numérique à enregistrer
     ///
     /// À appeler dans pipeline.rs pour chaque champ numérique d'un record.
+    #[allow(dead_code)]
     pub fn update_column_numeric(&mut self, col: &str, val: f64) {
         self.column_stats
             .entry(col.to_string())
@@ -225,6 +228,7 @@ impl ExecutionStats {
     /// * `col` - Nom de la colonne qui contient une valeur nulle
     ///
     /// Utile pour détecter les colonnes avec beaucoup de données manquantes.
+    #[allow(dead_code)]
     pub fn record_column_null(&mut self, col: &str) {
         self.column_stats
             .entry(col.to_string())

@@ -1,0 +1,11 @@
+id	nom	ville	population	fondation_annee
+1	Lyon	Rhône-Alpes	506000	-43
+2	Marseille	Provence	869000	-600
+3	Toulouse	Midi-Pyrénées	479000	1177
+4	Nice	Côte d'Azur	340000	-400
+5	Nantes	Pays de la Loire	330000	937
+6	Strasbourg	Alsace	280000	962
+7	Montpellier	Languedoc	285000	985
+8	Bordeaux	Aquitaine	254000	1154
+9	Lille	Nord-Pas-de-Calais	230000	1066
+10	Rennes	Bretagne	220000	927

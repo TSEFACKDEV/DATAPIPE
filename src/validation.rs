@@ -15,6 +15,7 @@
 //   let errors = validate_record(&record, &schema);
 //   if !errors.is_empty() { /* rejeter ou loguer */ }
 // =============================================================================
+#![allow(dead_code)]
 
 use crate::config::SchemaConfig;
 use crate::reader::Record;

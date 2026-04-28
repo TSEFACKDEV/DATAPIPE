@@ -40,7 +40,6 @@ use datapipe::writer::factory::create_writer;
 use datapipe::writer::jsonl_writer::JsonLinesSinkWriter;
 use datapipe::config::DestinationConfig;
 use serde_json::{json, Value};
-use std::collections::HashMap;
 use tempfile::tempdir;
 
 // ─── HELPERS PARTAGÉS ────────────────────────────────────────────────────────
@@ -279,7 +278,7 @@ fn test_pipeline_records_en_memoire_vers_jsonl() {
     // Simulation : transformation DROP (supprimer "salaire")
     let records_finaux: Vec<Record> = records_transformes
         .into_iter()
-        .map(|mut r| { r.remove("salaire"); r })
+        .map(|mut r| { r.shift_remove("salaire"); r })
         .collect();
 
     // ÉCRITURE → rôle de NGANSOP
@@ -440,7 +439,7 @@ fn test_pipeline_rename_compute_drop_vers_jsonl() {
 
     for record in records_source {
         // Simulation RENAME: nom_complet → nom
-        let mut r: Record = HashMap::new();
+        let mut r: Record = indexmap::IndexMap::new();
         if let Some(v) = record.get("nom_complet") {
             r.insert("nom".to_string(), v.clone());
         }

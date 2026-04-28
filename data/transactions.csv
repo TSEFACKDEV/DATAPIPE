@@ -1,0 +1,6 @@
+id,nom,email,montant,statut
+1,Alice,alice@example.com,100.50,complete
+2,Bob,bob@example.com,250.75,pending
+3,Charlie,charlie@example.com,75.25,complete
+4,Diana,diana@example.com,500.00,failed
+5,Etienne,etienne@example.com,125.00,complete

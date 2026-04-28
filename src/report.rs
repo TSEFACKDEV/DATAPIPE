@@ -16,6 +16,7 @@
 // Le fichier HTML généré est autonome (CSS intégré, pas de dépendance externe)
 // et peut être ouvert directement dans n'importe quel navigateur.
 // =============================================================================
+#![allow(dead_code)]
 
 use crate::reader::Record;
 use crate::stats::ExecutionStats;

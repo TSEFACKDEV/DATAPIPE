@@ -11,7 +11,11 @@ pub mod validation;
 pub mod report;
 pub mod join;
 pub mod watch;
+pub mod transform;
+pub mod writer;
 
 // Réexporter les types les plus utilisés pour simplifier les imports
 pub use reader::{SourceReader, Record};
 pub use reader::csv_reader::CsvReader;
+pub use transform::Transform;
+pub use writer::SinkWriter;

@@ -10,7 +10,6 @@ use crate::reader::json_reader::JsonReader;
 use crate::reader::delimited_reader::DelimitedReader;
 use crate::transform::Transform;
 use crate::transform::factory::create_transform;
-use crate::writer::SinkWriter;
 use crate::writer::factory::create_writer;
 use anyhow::{Result, anyhow};
 use std::path::Path;
@@ -45,7 +44,7 @@ pub fn run(config_path: &Path) -> Result<()> {
     println!("  Transformations créées: {} chaînes", transforms.len());
     
     // ✍️ ÉTAPE 4: Créer l'écrivain pour la sortie
-    let mut writer = create_writer(&config.destination);
+    let mut writer = create_writer(&config.destination)?;
     
     println!("\n🚀 Traitement des records...");
     
@@ -140,8 +139,7 @@ fn create_reader(config: &SourceConfig) -> Result<Box<dyn SourceReader>> {
                 .delimiter
                 .as_ref()
                 .and_then(|d| d.chars().next())
-                .map(|c| c as u8)
-                .unwrap_or(b',');
+                .unwrap_or(',');
             
             Ok(Box::new(CsvReader {
                 path: config.path.clone(),

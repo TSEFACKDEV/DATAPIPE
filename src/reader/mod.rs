@@ -20,3 +20,5 @@ pub trait SourceReader {
 
 // On déclare les sous-modules pour que Rust sache où chercher les fichiers
 pub mod csv_reader;
+pub mod json_reader;
+pub mod delimited_reader;

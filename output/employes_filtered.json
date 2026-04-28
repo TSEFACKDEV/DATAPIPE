@@ -1,0 +1,65 @@
+[
+  {
+    "date_embauche": "2022-03-15",
+    "departement": "Informatique",
+    "employee_name": "Alice Martin",
+    "id": 1,
+    "salaire": 5000.0
+  },
+  {
+    "date_embauche": "2020-01-10",
+    "departement": "Informatique",
+    "employee_name": "Charlie Bernard",
+    "id": 3,
+    "salaire": 5500.0
+  },
+  {
+    "date_embauche": "2019-11-05",
+    "departement": "Informatique",
+    "employee_name": "Etienne Lefevre",
+    "id": 5,
+    "salaire": 6000.0
+  },
+  {
+    "date_embauche": "2021-12-01",
+    "departement": "Informatique",
+    "employee_name": "Georges Roux",
+    "id": 7,
+    "salaire": 5200.0
+  },
+  {
+    "date_embauche": "2020-08-30",
+    "departement": "Informatique",
+    "employee_name": "Karine Beaumont",
+    "id": 11,
+    "salaire": 5800.0
+  },
+  {
+    "date_embauche": "2019-10-25",
+    "departement": "Informatique",
+    "employee_name": "Nicolas Petit",
+    "id": 14,
+    "salaire": 5900.0
+  },
+  {
+    "date_embauche": "2021-02-12",
+    "departement": "Informatique",
+    "employee_name": "Quentin Leclerc",
+    "id": 17,
+    "salaire": 5700.0
+  },
+  {
+    "date_embauche": "2020-05-08",
+    "departement": "Informatique",
+    "employee_name": "Therese Vincent",
+    "id": 20,
+    "salaire": 6100.0
+  },
+  {
+    "date_embauche": "2020-09-27",
+    "departement": "Informatique",
+    "employee_name": "Yvonne Deschamps",
+    "id": 24,
+    "salaire": 5300.0
+  }
+]

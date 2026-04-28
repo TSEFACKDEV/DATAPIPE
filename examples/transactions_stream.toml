@@ -1,0 +1,19 @@
+[source]
+format = "csv"
+path = "data/transactions.csv"
+delimiter = ","
+
+[destination]
+format = "jsonl"
+path = "output/transactions_completed.jsonl"
+
+[[transforms]]
+type = "filter"
+column = "statut"
+value = "complete"
+operator = "="
+
+[[transforms]]
+type = "cast"
+column = "montant"
+target_type = "number"

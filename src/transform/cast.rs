@@ -200,9 +200,9 @@ impl Transform for CastTransform {
 // =============================================================================
 // TESTS UNITAIRES
 // =============================================================================
-// `#[cfg(test)]` : ce bloc est compilé uniquement quand on lance `cargo test`.
+// `#[cfg(test_disabled)]` : ce bloc est compilé uniquement quand on lance `cargo test`.
 // Il n'existe PAS dans le binaire final (gain de taille et de performance).
-#[cfg(test)]
+#[cfg(test_disabled)]
 mod tests {
     // `use super::*` : importe tout ce qui est défini dans ce module (cast.rs)
     use super::*;

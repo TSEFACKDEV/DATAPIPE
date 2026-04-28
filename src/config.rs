@@ -9,6 +9,7 @@ pub struct PipelineConfig {
     #[serde(default)]
     pub join: Option<JoinConfig>,
     #[serde(default)]
+    #[allow(dead_code)]
     pub schema: Option<SchemaConfig>,
 }
 
@@ -39,6 +40,7 @@ pub struct TransformConfig {
 }
 
 #[derive(Debug, Deserialize)]
+#[allow(dead_code)]
 pub struct JoinConfig {
     pub right_source: SourceConfig,
     pub left_key: String,
@@ -47,6 +49,7 @@ pub struct JoinConfig {
 }
 
 #[derive(Debug, Deserialize)]
+#[allow(dead_code)]
 pub struct SchemaConfig {
     pub required_columns: Vec<String>,
     pub column_types: Option<std::collections::HashMap<String, String>>,

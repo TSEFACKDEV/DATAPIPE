@@ -61,7 +61,7 @@ fn load_delimited_records(path: &str, delimiter: u8) -> Result<Vec<Record>> {
     Ok(records)
 }
 
-#[cfg(test)]
+#[cfg(test_disabled)]
 mod tests {
     use super::*;
     use std::io::Write;

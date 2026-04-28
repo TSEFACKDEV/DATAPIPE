@@ -13,3 +13,9 @@ pub trait SinkWriter {
     /// Finalise l'écriture  (flush, fermeture, sérialisation finale).
     fn finalize(&mut self) -> Result<()>;
 }
+
+// Déclarer les sous-modules
+pub mod csv_writer;
+pub mod json_writer;
+pub mod jsonl_writer;
+pub mod factory;
