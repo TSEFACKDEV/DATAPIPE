@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "produit": "Laptop",
+    "categorie": "Électronique",
+    "prix": 999.99,
+    "stock": 45,
+    "en_promotion": true
+  },
+  {
+    "id": 2,
+    "produit": "Souris",
+    "categorie": "Accessoires",
+    "prix": 29.99,
+    "stock": 150,
+    "en_promotion": false
+  },
+  {
+    "id": 3,
+    "produit": "Clavier",
+    "categorie": "Accessoires",
+    "prix": 79.99,
+    "stock": 75,
+    "en_promotion": true
+  },
+  {
+    "id": 4,
+    "produit": "Moniteur",
+    "categorie": "Électronique",
+    "prix": 349.99,
+    "stock": 20,
+    "en_promotion": false
+  },
+  {
+    "id": 5,
+    "produit": "Câble USB",
+    "categorie": "Accessoires",
+    "prix": 9.99,
+    "stock": 500,
+    "en_promotion": true
+  }
+]

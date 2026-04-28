@@ -1,0 +1,28 @@
+[
+<<<<<<< HEAD
+  {
+    "nom": "Alice Martin",
+    "departement": "Informatique",
+    "salaire": "5000"
+  },
+  {
+    "nom": "Bob Dupont",
+    "departement": "Ressources Humaines",
+    "salaire": "4000"
+  },
+  {
+    "nom": "Charlie Bernard",
+    "departement": "Informatique",
+    "salaire": "5500"
+  },
+  {
+    "nom": "Diana Leclerc",
+    "departement": "Finance",
+    "salaire": "4500"
+  }
+=======
+  {"id": 1, "nom": "Jean", "age": 25, "actif": true},
+  {"id": 2, "nom": "Marie", "age": 30, "actif": false},
+  {"id": 3, "nom": "Paul", "age": 35, "actif": true}
+>>>>>>> afb208890263851f330494ee011f7de6eaf2e375
+]

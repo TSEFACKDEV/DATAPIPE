@@ -1,0 +1,24 @@
+[source]
+format = "delimited"
+path = "data/villes.txt"
+delimiter = "\t"
+
+[destination]
+format = "json"
+path = "output/villes_output.json"
+
+[[transforms]]
+type = "cast"
+column = "population"
+target_type = "number"
+
+[[transforms]]
+type = "cast"
+column = "fondation_annee"
+target_type = "number"
+
+[[transforms]]
+type = "filter"
+column = "population"
+value = "300000"
+operator = ">"

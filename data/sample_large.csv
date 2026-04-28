@@ -1,0 +1,26 @@
+id,nom_complet,departement,salaire,date_embauche,actif
+1,Alice Martin,Informatique,5000,2022-03-15,true
+2,Bob Dupont,RH,4000,2021-06-20,true
+3,Charlie Bernard,Informatique,5500,2020-01-10,true
+4,Diana Thompson,Finance,4500,2023-02-28,true
+5,Etienne Lefevre,Informatique,6000,2019-11-05,true
+6,Francoise Moreau,Ventes,3800,2022-09-12,true
+7,Georges Roux,Informatique,5200,2021-12-01,true
+8,Helene Gagnon,Ressources Humaines,3900,2023-01-15,false
+9,Isabelle Marchand,Finance,4200,2022-05-20,true
+10,Jean-Pierre Dubois,Marketing,3500,2023-04-10,true
+11,Karine Beaumont,Informatique,5800,2020-08-30,true
+12,Laurent Fontaine,Ventes,3600,2022-11-22,true
+13,Marielle Girard,Finance,4300,2021-07-14,true
+14,Nicolas Petit,Informatique,5900,2019-10-25,true
+15,Olivier Renard,RH,4100,2023-03-05,true
+16,Patricia Bonnet,Marketing,3400,2022-06-18,false
+17,Quentin Leclerc,Informatique,5700,2021-02-12,true
+18,Rachel Arnould,Finance,4400,2022-09-30,true
+19,Stephane Mathieu,Ventes,3700,2023-01-22,true
+20,Therese Vincent,Informatique,6100,2020-05-08,true
+21,Urbain Chevallier,RH,4000,2022-12-11,true
+22,Veronique Rousseau,Marketing,3600,2023-02-14,true
+23,William Bernard,Finance,4500,2021-08-19,true
+24,Yvonne Deschamps,Informatique,5300,2020-09-27,true
+25,Zacharie Gendron,Ventes,3900,2022-04-03,true

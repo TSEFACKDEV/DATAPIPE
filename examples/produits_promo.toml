@@ -1,0 +1,22 @@
+[source]
+format = "json"
+path = "data/produits.json"
+
+[destination]
+format = "csv"
+path = "output/produits_export.csv"
+
+[[transforms]]
+type = "filter"
+column = "en_promotion"
+value = "true"
+operator = "="
+
+[[transforms]]
+type = "drop"
+column = "stock"
+
+[[transforms]]
+type = "rename"
+from = "categorie"
+to = "category"

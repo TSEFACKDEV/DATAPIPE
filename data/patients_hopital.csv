@@ -1,0 +1,31 @@
+id_patient,NomPatient,DateNaiss,sexe,departement,diagnostic,DateAdmission,duree_sejour_j,cout_fcfa,assure
+P001,ATEBA Jean Pierre,1985-03-12,M,Médecine interne,Paludisme sévère,2024-01-10,5,45000,true
+P002,MVOGO Marie Claire,1992-07-25,F,Pédiatrie,Pneumonie,2024-01-11,7,62000,false
+P003,BIYA Emmanuel,1978-11-03,M,Chirurgie,Appendicite,2024-01-12,3,150000,true
+P004,FOUDA Cécile,2001-04-18,F,Gynécologie,Accouchement normal,2024-01-13,2,35000,true
+P005,NGONO Paul,1965-09-30,M,Cardiologie,Hypertension,2024-01-14,4,80000,false
+P006,MBARGA Thérèse,1990-02-14,F,Médecine interne,Typhöide,2024-01-15,6,55000,false
+P007,EYEBE Rodrigue,1998-06-22,M,Urgences,Traumatisme crânien,2024-01-16,10,220000,true
+P008,ABENA Bernadette,1975-12-01,F,Oncologie,Suivi traitement,2024-01-17,1,95000,true
+P009,ESSAMA Norbert,1988-08-09,M,Pédiatrie,Diarrhée aiguë,2024-01-18,3,28000,false
+P010,NKOMO Adèle,2010-05-17,F,Pédiatrie,Rougeole,2024-01-19,4,32000,false
+P011,MBALLA Célestin,1999-09-14,M,Chirurgie,Hernie inguinale,2024-01-20,4,185000,true
+P012,NDOMBÉ Christelle,1987-11-22,F,Gynécologie,Fibrome utérin,2024-01-21,5,210000,false
+P013,ONDOUA Jacques,1970-02-01,M,Cardiologie,Infarctus du myocarde,2024-01-22,12,450000,true
+P014,MBEDE Rose,2005-07-30,F,Pédiatrie,Gastro-entérite,2024-01-23,3,27000,false
+P015,NTEPPE Séverin,1982-12-11,M,Médecine interne,Diabète décompensé,2024-01-24,9,120000,true
+P016,EBANG Angèle,1995-04-05,F,Urgences,Intoxication alimentaire,2024-01-25,2,45000,false
+P017,KOUM Nicolas,1960-06-18,M,Oncologie,Cancer de la prostate,2024-01-26,14,380000,true
+P018,BEKONO Marthe,2000-09-27,F,Gynécologie,Endométriose,2024-01-27,6,145000,false
+P019,ZANGA Hervé,1991-03-02,M,Chirurgie,Fracture du fémur,2024-01-28,8,295000,true
+P020,MATIP Eugénie,1977-10-10,F,Médecine interne,Insuffisance rénale,2024-01-29,7,88000,false
+P021,AYISSI Brice,1983-07-19,M,Pédiatrie,Paludisme simple,2024-01-30,2,22000,true
+P022,MBIDA Claudine,1996-02-28,F,Cardiologie,Péricardite,2024-01-31,8,135000,false
+P023,TSOBNANG Patrice,1968-12-05,M,Urgences,Accident vasculaire cérébral,2024-02-01,15,620000,true
+P024,ABESSOLO Chantal,2007-05-14,F,Pédiatrie,Infection urinaire,2024-02-02,4,31000,false
+P025,ETOUA François,1973-08-20,M,Chirurgie,Cholécystite,2024-02-03,5,197000,true
+P026,MOTO Angélique,1981-01-23,F,Médecine interne,Anémie sévère,2024-02-04,6,54000,false
+P027,NDJOCK Grégoire,1963-04-16,M,Cardiologie,Insuffisance cardiaque,2024-02-05,11,310000,true
+P028,MANGA Olive,2002-11-29,F,Gynécologie,Ménorragies,2024-02-06,3,47000,false
+P029,EBOULE Cédric,1994-06-08,M,Urgences,Appendicite aiguë,2024-02-07,4,172000,true
+P030,MBALLA Carine,1989-09-12,F,Oncologie,Chimiothérapie,2024-02-08,2,98000,false

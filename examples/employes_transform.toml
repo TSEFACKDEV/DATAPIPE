@@ -1,0 +1,28 @@
+[source]
+format = "csv"
+path = "data/sample_large.csv"
+delimiter = ","
+
+[destination]
+format = "json"
+path = "output/employes_filtered.json"
+
+[[transforms]]
+type = "rename"
+from = "nom_complet"
+to = "employee_name"
+
+[[transforms]]
+type = "filter"
+column = "departement"
+value = "Informatique"
+operator = "="
+
+[[transforms]]
+type = "drop"
+column = "actif"
+
+[[transforms]]
+type = "cast"
+column = "salaire"
+target_type = "number"
