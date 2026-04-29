@@ -412,14 +412,18 @@ datapipe/
 
 ## 15. Équipe
 
-| Rôle                              | Membre                        |
-|-----------------------------------|-------------------------------|
-| Chef de projet / pipeline.rs      | TSEFACK CALVIN KLEIN          |
-| Transformations (trait + impléms) | ASSONGUE                      |
-| Statistiques d'exécution          | DONFACK (#08)                 |
-| Écrivains JSON/JSONL/factory      | NGANSOP NGOUABOU FREDI LOIK   |
-| Lecteurs CSV/JSON/Délimité        | Équipe — Groupe 6             |
-| Tests & intégration               | Équipe — Groupe 6             |
+| # | Matricule | Membre                                  | Rôle & Livrables                                                              |
+|---|-----------|-----------------------------------------|-------------------------------------------------------------------------------|
+| 01 | 22G00540 | TSEFACK CALVIN KLEIN                    | Chef de projet & architecte — `main.rs`, `config.rs`, `pipeline.rs`, `README.md`, `Cargo.toml` |
+| 02 | 22G00347 | NZEUTEM DOMMOE EUNICE FELIXTINE         | Lecteur CSV & tests Partie 1 — `reader/mod.rs`, `reader/csv_reader.rs`, `tests/csv_test.rs` |
+| 03 | 22G00071 | DIOM LUCRAINE LETHICIA FIEN             | Lecteurs JSON & texte délimité — `reader/json_reader.rs`, `reader/delimited_reader.rs` |
+| 04 | 22G00420 | ASSONGUE TATANG MURIEL                  | Transformations Rename & Filter — `transform/mod.rs`, `transform/rename.rs`, `transform/filter.rs` |
+| 05 | 22G00335 | NOLACK KAWUNJIBI FRANGE PARKER          | Transformations Cast, Compute & Drop — `transform/cast.rs`, `compute.rs`, `drop.rs`, `factory.rs` |
+| 06 | 22G00500 | NGLITANG RUBEN                          | Écrivains CSV & JSON — `writer/mod.rs`, `writer/csv_writer.rs`, `writer/json_writer.rs` |
+| 07 | 22G00307 | NGANSOP NGOUABOU FREDI LOIK             | Écrivain JSONL & tests d'intégration — `writer/jsonl_writer.rs`, `writer/factory.rs`, `tests/integration_test.rs` |
+| 08 | 22G00085 | DONFACK KEUNANG VLADIMIR GEORGES        | Statistiques, validation & rapport HTML — `stats.rs`, `validation.rs`, `report.rs` |
+| 09 | 24G01074 | ATEKOUMBO EXCEL DEXTE JORIS             | Jointure JOIN & mode dry-run — `join.rs`, `config.rs` (extension), `examples/join_demo/` |
+| 10 | 22G00327 | NJOH MASSANGO ADOLPHE MACDEAUVILLE      | Mode Watch, documentation & démo finale — `watch.rs`, `examples/`, documentation `///` |
 
 ---
 
