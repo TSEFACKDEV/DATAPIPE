@@ -56,6 +56,7 @@ L'exécutable se trouve dans `target/release/datapipe` (Windows : `target\releas
 
 ## 3. Utilisation rapide
 
+**Linux / macOS :**
 ```bash
 # Exécution normale
 ./target/release/datapipe --config pipeline.toml
@@ -68,6 +69,21 @@ L'exécutable se trouve dans `target/release/datapipe` (Windows : `target\releas
 
 # Afficher l'aide
 ./target/release/datapipe --help
+```
+
+**Windows (PowerShell ou cmd) :**
+```cmd
+# Exécution normale
+target\release\datapipe.exe --config pipeline.toml
+
+# Aperçu sans écriture (dry-run)
+target\release\datapipe.exe --config pipeline.toml --dry-run
+
+# Surveillance automatique des changements
+target\release\datapipe.exe --config pipeline.toml --watch --interval 60
+
+# Afficher l'aide
+target\release\datapipe.exe --help
 ```
 
 ---
@@ -248,22 +264,36 @@ Les erreurs de validation sont signalées dans la console (`stderr`) sans interr
 ```
 [OK] Pipeline terminé!
 
-╔════════════════════════════════════════════════╗
-║         RAPPORT D'EXÉCUTION DATAPIPE           ║
-╠════════════════════════════════════════════════╣
-║  Source     : data/employes.csv (csv)          ║
-║  Destination: output/resultat.json (json)      ║
-║  Transforms : 4                                ║
-╠════════════════════════════════════════════════╣
-║  Records lus         : 25                      ║
-║  Records transformés : 9                       ║
-║  Records filtrés     : 16                      ║
-║  Records écrits      : 9                       ║
-║  Erreurs             : 0                       ║
-╠════════════════════════════════════════════════╣
-║  Durée totale        : 12 ms                   ║
-║  Débit               : 2083 records/s          ║
-╚════════════════════════════════════════════════╝
+════════════════════════════════════════════════════
+         RAPPORT D'EXÉCUTION — DATAPIPE
+════════════════════════════════════════════════════
+     PIPELINE
+────────────────────────────────────────────────────
+    Source        : data/employees.csv (csv)
+    Destination   : output/resultat.json (json)
+    Transformations configurées : 4
+────────────────────────────────────────────────────
+     HORODATAGE
+────────────────────────────────────────────────────
+    Début         : 2026-04-29 10:00:00 UTC
+    Fin           : 2026-04-29 10:00:00 UTC
+    Durée         : 12ms
+────────────────────────────────────────────────────
+     RECORDS
+────────────────────────────────────────────────────
+    Lus              : 25
+    Transformés      : 9
+    Filtrés           : 16
+    Écrits            : 9
+    Erreurs           : 0
+────────────────────────────────────────────────────
+     PERFORMANCE
+────────────────────────────────────────────────────
+    Débit             : 2083 records/s
+    Volume estimé     : 6.2 Ko
+════════════════════════════════════════════════════
+    STATUT : SUCCÈS — pipeline terminé sans erreur ni anomalie
+════════════════════════════════════════════════════
 ```
 
 ---

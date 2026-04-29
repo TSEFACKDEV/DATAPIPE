@@ -354,7 +354,7 @@ impl ExecutionStats {
 
         // Nombre de transformations configurées dans le fichier TOML
         println!(
-            "     Transformations configurées : {}",
+            "    Transformations configurées : {}",
             self.transforms_count
         );
 
@@ -379,10 +379,10 @@ impl ExecutionStats {
 
         // Affichage intelligent de la durée : ms ou secondes selon la valeur
         if self.duration_ms < 1000 {
-            println!("     Durée         : {}ms", self.duration_ms);
+            println!("    Durée         : {}ms", self.duration_ms);
         } else {
             println!(
-                "     Durée         : {:.2}s",
+                "    Durée         : {:.2}s",
                 self.duration_ms as f64 / 1000.0
             );
         }
@@ -398,16 +398,12 @@ impl ExecutionStats {
         println!("{}", sep_simple);
 
         println!("    Lus              : {}", self.records_read);
-        println!("     Transformés      : {}", self.records_transformed);
+        println!("    Transformés      : {}", self.records_transformed);
         println!("    Filtrés           : {}", self.records_filtered);
         println!("    Écrits            : {}", self.records_written);
 
         // Erreurs : on distingue "aucune erreur" d'un nombre d'erreurs
-        if self.errors_encountered > 0 {
-            println!("  [WARN]   Erreurs           : {}", self.errors_encountered);
-        } else {
-            println!("  [OK]  Erreurs           : 0");
-        }
+        println!("    Erreurs           : {}", self.errors_encountered);
 
         println!("{}", sep_simple);
 
@@ -436,7 +432,7 @@ impl ExecutionStats {
             println!("    Taux d'écriture   : {:.1}%", taux_ecriture);
 
             // Pourcentage d'erreurs — idéalement doit être 0%
-            println!("  [WARN]   Taux d'erreur     : {:.2}%", taux_erreur);
+            println!("    Taux d'erreur     : {:.2}%", taux_erreur);
 
             println!("{}", sep_simple);
         }
