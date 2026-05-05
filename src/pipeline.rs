@@ -12,6 +12,7 @@ use crate::transform::Transform;
 use crate::transform::factory::create_transform;
 use crate::writer::factory::create_writer;
 use crate::validation::validate_record;
+use crate::report::generate_html_report;
 use anyhow::{Result, anyhow};
 use std::path::Path;
 
@@ -59,7 +60,10 @@ pub fn run(config_path: &Path) -> Result<()> {
     let mut writer = create_writer(&config.destination)?;
     
     println!("\n Traitement des records...");
-    
+
+    // Aperçu des premiers records pour le rapport HTML
+    let mut preview: Vec<crate::reader::Record> = Vec::new();
+
     //  ÉTAPE 5: Boucle principale - traiter chaque record
     for result in reader.records() {
         match result {
@@ -77,6 +81,11 @@ pub fn run(config_path: &Path) -> Result<()> {
                             eprintln!("   - {}", err.to_string());
                         }
                     }
+                }
+
+                // Collecter les 10 premiers records pour l'aperçu du rapport
+                if preview.len() < 10 {
+                    preview.push(record.clone());
                 }
 
                 //  Mise à jour des stats par colonne (valeurs numériques)
@@ -149,7 +158,14 @@ pub fn run(config_path: &Path) -> Result<()> {
     stats.stop();
     println!("\n[OK] Pipeline terminé!");
     stats.print_report();
-    
+
+    //  ÉTAPE 8: Générer le rapport HTML
+    let report_path = "reports/rapport.html";
+    match generate_html_report(&stats, &preview, report_path) {
+        Ok(_) => println!(" Rapport HTML disponible : {}", report_path),
+        Err(e) => eprintln!("[WARN] Impossible de générer le rapport HTML : {}", e),
+    }
+
     Ok(())
 }
 

@@ -1,5 +1,4 @@
 [
-<<<<<<< HEAD
   {
     "nom": "Alice Martin",
     "departement": "Informatique",
@@ -20,9 +19,4 @@
     "departement": "Finance",
     "salaire": "4500"
   }
-=======
-  {"id": 1, "nom": "Jean", "age": 25, "actif": true},
-  {"id": 2, "nom": "Marie", "age": 30, "actif": false},
-  {"id": 3, "nom": "Paul", "age": 35, "actif": true}
->>>>>>> afb208890263851f330494ee011f7de6eaf2e375
 ]

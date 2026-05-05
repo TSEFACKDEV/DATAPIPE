@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataPipe — Rapport d'exécution</title>
+    <style>
+        /* ── Reset et base ───────────────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* ── Variables de couleurs ───────────────────────────────────── */
+        :root {
+            --bg-primary:    #0f1117;
+            --bg-secondary:  #1a1d27;
+            --bg-card:       #20243a;
+            --bg-card-hover: #252942;
+            --accent-blue:   #4f8ef7;
+            --accent-green:  #22c55e;
+            --accent-orange: #f59e0b;
+            --accent-red:    #ef4444;
+            --accent-purple: #a855f7;
+            --accent-cyan:   #06b6d4;
+            --text-primary:  #e2e8f0;
+            --text-secondary:#94a3b8;
+            --text-muted:    #64748b;
+            --border:        #2d3250;
+            --border-light:  #363d5e;
+            --shadow:        0 4px 24px rgba(0,0,0,0.4);
+            --shadow-hover:  0 8px 32px rgba(79,142,247,0.15);
+            --radius:        12px;
+            --radius-sm:     8px;
+        }
+
+        /* ── Corps de la page ────────────────────────────────────────── */
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 24px 16px;
+        }
+
+        /* ── Conteneur principal ─────────────────────────────────────── */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        /* ── En-tête ─────────────────────────────────────────────────── */
+        .header {
+            background: linear-gradient(135deg, #1a1d27 0%, #20243a 50%, #1e2235 100%);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: 36px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Ligne décorative en haut de l'en-tête */
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-cyan));
+        }
+
+        .header-left h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        .header-left .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        .header-right {
+            text-align: right;
+        }
+
+        .header-right .timestamp {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-top: 8px;
+        }
+
+        .badge-success { background: rgba(34,197,94,0.15); color: var(--accent-green); border: 1px solid rgba(34,197,94,0.3); }
+        .badge-error   { background: rgba(239,68,68,0.15);  color: var(--accent-red);   border: 1px solid rgba(239,68,68,0.3); }
+        .badge-warning { background: rgba(245,158,11,0.15); color: var(--accent-orange); border: 1px solid rgba(245,158,11,0.3); }
+
+        /* ── Bannière de statut ───────────────────────────────────────── */
+        .status-banner {
+            border-radius: var(--radius);
+            padding: 18px 28px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 1rem;
+            font-weight: 500;
+            border: 1px solid;
+        }
+
+        .status-banner.success {
+            background: rgba(34,197,94,0.08);
+            border-color: rgba(34,197,94,0.25);
+            color: var(--accent-green);
+        }
+
+        .status-banner.error {
+            background: rgba(239,68,68,0.08);
+            border-color: rgba(239,68,68,0.25);
+            color: var(--accent-red);
+        }
+
+        .status-banner.warning {
+            background: rgba(245,158,11,0.08);
+            border-color: rgba(245,158,11,0.25);
+            color: var(--accent-orange);
+        }
+
+        .status-icon { font-size: 1.5rem; }
+
+        /* ── Grille de cartes ────────────────────────────────────────── */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--border-light);
+            background: var(--bg-card-hover);
+        }
+
+        /* Barre colorée en haut de chaque carte */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+        }
+
+        .card-blue::before   { background: var(--accent-blue); }
+        .card-green::before  { background: var(--accent-green); }
+        .card-orange::before { background: var(--accent-orange); }
+        .card-red::before    { background: var(--accent-red); }
+        .card-purple::before { background: var(--accent-purple); }
+        .card-cyan::before   { background: var(--accent-cyan); }
+
+        .card-icon { font-size: 1.6rem; }
+
+        .card-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 600;
+        }
+
+        .card-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .card-blue   .card-value { color: var(--accent-blue); }
+        .card-green  .card-value { color: var(--accent-green); }
+        .card-orange .card-value { color: var(--accent-orange); }
+        .card-red    .card-value { color: var(--accent-red); }
+        .card-purple .card-value { color: var(--accent-purple); }
+        .card-cyan   .card-value { color: var(--accent-cyan); }
+
+        .card-sub {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        /* ── Sections génériques ─────────────────────────────────────── */
+        .section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            padding: 18px 24px;
+            background: rgba(255,255,255,0.02);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .section-header .section-icon { font-size: 1.1rem; }
+
+        .section-body {
+            padding: 24px;
+        }
+
+        /* ── Grille d'informations ───────────────────────────────────── */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            font-weight: 600;
+        }
+
+        .info-value {
+            font-size: 0.92rem;
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+            background: rgba(255,255,255,0.04);
+            padding: 6px 10px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            word-break: break-all;
+        }
+
+        /* ── Barres de progression ───────────────────────────────────── */
+        .progress-row {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.83rem;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar-bg {
+            height: 8px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+
+        .fill-blue   { background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan)); }
+        .fill-green  { background: linear-gradient(90deg, var(--accent-green), #16a34a); }
+        .fill-orange { background: linear-gradient(90deg, var(--accent-orange), #d97706); }
+        .fill-red    { background: linear-gradient(90deg, var(--accent-red), #dc2626); }
+
+        /* ── Statistiques par colonne ────────────────────────────────── */
+        .col-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 14px;
+        }
+
+        .col-stat-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+        }
+
+        .col-stat-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            font-family: 'Courier New', monospace;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .col-stat-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            padding: 3px 0;
+        }
+
+        .col-stat-key  { color: var(--text-muted); }
+        .col-stat-val  { color: var(--text-primary); font-weight: 500; }
+        .col-stat-warn { color: var(--accent-orange); font-weight: 600; }
+
+        /* ── Tableau de prévisualisation ─────────────────────────────── */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: var(--radius-sm);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.83rem;
+        }
+
+        thead tr {
+            background: rgba(79,142,247,0.08);
+        }
+
+        thead th {
+            padding: 12px 14px;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--accent-blue);
+            border-bottom: 2px solid var(--border-light);
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+
+        tbody tr:hover { background: rgba(255,255,255,0.03); }
+
+        tbody tr:last-child { border-bottom: none; }
+
+        tbody td {
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .null-value {
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: 0.78rem;
+        }
+
+        /* ── Pied de page ────────────────────────────────────────────── */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer span {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        /* ── Responsive ──────────────────────────────────────────────── */
+        @media (max-width: 640px) {
+            .header { flex-direction: column; gap: 16px; text-align: center; }
+            .header-right { text-align: center; }
+            .header-left h1 { font-size: 1.5rem; }
+            .card-value { font-size: 1.8rem; }
+            .section-body { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <h1> DataPipe</h1>
+                <div class="subtitle">Rapport d'exécution du pipeline ETL</div>
+                <div class="subtitle" style="margin-top:6px; color:#64748b; font-size:0.8rem;">
+                    data/employees.csv (csv) → output/employees_propres.json (json)
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="timestamp">Généré le 2026-05-05 07:07:35 UTC</div>
+                <div class="timestamp" style="margin-top:4px;">
+                    5 transformation(s) configurée(s)
+                </div>
+            </div>
+        </div>
+        <div class="status-banner success">
+            <span class="status-icon"></span>
+            <span>Pipeline terminé avec succès — 5 record(s) traité(s) sans erreur ni anomalie</span>
+        </div>
+        <div class="cards-grid">
+            <div class="card card-blue">
+                <span class="card-icon"></span>
+                <span class="card-label">Records lus</span>
+                <span class="card-value">10</span>
+                <span class="card-sub">depuis la source</span>
+            </div>
+            <div class="card card-green">
+                <span class="card-icon"></span>
+                <span class="card-label">Records écrits</span>
+                <span class="card-value">5</span>
+                <span class="card-sub">50.0% des records lus</span>
+            </div>
+            <div class="card card-orange">
+                <span class="card-icon"></span>
+                <span class="card-label">Records filtrés</span>
+                <span class="card-value">5</span>
+                <span class="card-sub">50.0% des records lus</span>
+            </div>
+            <div class="card card-red">
+                <span class="card-icon">[WARN]</span>
+                <span class="card-label">Erreurs</span>
+                <span class="card-value">0</span>
+                <span class="card-sub">pendant l'exécution</span>
+            </div>
+            <div class="card card-purple">
+                <span class="card-icon"></span>
+                <span class="card-label">Durée</span>
+                <span class="card-value">2ms</span>
+                <span class="card-sub">temps total</span>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon"></span>
+                <h2>Performance</h2>
+            </div>
+            <div class="section-body">
+                <div class="info-grid" style="margin-bottom:24px;">
+                    <div class="info-item">
+                        <span class="info-label">Débit</span>
+                        <span class="info-value">2500 records/s</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Volume estimé</span>
+                        <span class="info-value">2.5 Ko</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Début</span>
+                        <span class="info-value">2026-05-05 07:07:35 UTC</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Fin</span>
+                        <span class="info-value">2026-05-05 07:07:35 UTC</span>
+                    </div>
+                </div>
+
+                <div class="progress-row">
+                    <div class="progress-label">
+                        <span> Records écrits</span>
+                        <span>50%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill fill-green" style="width:50%"></div>
+                    </div>
+                </div>
+                <div class="progress-row">
+                    <div class="progress-label">
+                        <span> Records filtrés</span>
+                        <span>50%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill fill-orange" style="width:50%"></div>
+                    </div>
+                </div>
+                <div class="progress-row">
+                    <div class="progress-label">
+                        <span>[WARN] Taux d'erreur</span>
+                        <span>0%</span>
+                    </div>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill fill-red" style="width:0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon"></span>
+                <h2>Informations pipeline</h2>
+            </div>
+            <div class="section-body">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Fichier source</span>
+                        <span class="info-value">data/employees.csv</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Format source</span>
+                        <span class="info-value">csv</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Fichier destination</span>
+                        <span class="info-value">output/employees_propres.json</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Format destination</span>
+                        <span class="info-value">json</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Transformations</span>
+                        <span class="info-value">5 configurée(s)</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Records transformés</span>
+                        <span class="info-value">5</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon"></span>
+                <h2>Statistiques par colonne</h2>
+            </div>
+            <div class="section-body">
+                <div class="col-stats-grid">
+                    <div class="col-stat-card">
+                <div class="col-stat-name"> age</div>
+                <div class="col-stat-row">
+                    <span class="col-stat-key">Valeurs non-nulles</span>
+                    <span class="col-stat-val">10</span>
+                </div>
+                <div class="col-stat-row">
+                    <span class="col-stat-key">Valeurs nulles</span>
+                    <span class="col-stat-val">0 [OK]</span>
+                </div>
+                <div class="col-stat-row">
+                    <span class="col-stat-key">Minimum</span>
+                    <span class="col-stat-val">25.0000</span>
+                </div>
+                <div class="col-stat-row">
+                    <span class="col-stat-key">Maximum</span>
+                    <span class="col-stat-val">45.0000</span>
+                </div>
+                <div class="col-stat-row">
+                    <span class="col-stat-key">Moyenne</span>
+                    <span class="col-stat-val">32.2000</span>
+                </div>
+            </div><div class="col-stat-card">
+                <div class="col-stat-name"> mot_de_passe</div>
+                <div class="col-stat-row">
+                    <span class="col-stat-key">Valeurs non-nulles</span>
+                    <span class="col-stat-val">1</span>
+                </div>
+                <div class="col-stat-row">
+                    <span class="col-stat-key">Valeurs nulles</span>
+                    <span class="col-stat-val">0 [OK]</span>
+                </div>
+                <div class="col-stat-row">
+                    <span class="col-stat-key">Minimum</span>
+                    <span class="col-stat-val">123456.0000</span>
+                </div>
+                <div class="col-stat-row">
+                    <span class="col-stat-key">Maximum</span>
+                    <span class="col-stat-val">123456.0000</span>
+                </div>
+                <div class="col-stat-row">
+                    <span class="col-stat-key">Moyenne</span>
+                    <span class="col-stat-val">123456.0000</span>
+                </div>
+            </div><div class="col-stat-card">
+                <div class="col-stat-name"> salaire</div>
+                <div class="col-stat-row">
+                    <span class="col-stat-key">Valeurs non-nulles</span>
+                    <span class="col-stat-val">10</span>
+                </div>
+                <div class="col-stat-row">
+                    <span class="col-stat-key">Valeurs nulles</span>
+                    <span class="col-stat-val">0 [OK]</span>
+                </div>
+                <div class="col-stat-row">
+                    <span class="col-stat-key">Minimum</span>
+                    <span class="col-stat-val">42000.0000</span>
+                </div>
+                <div class="col-stat-row">
+                    <span class="col-stat-key">Maximum</span>
+                    <span class="col-stat-val">80000.0000</span>
+                </div>
+                <div class="col-stat-row">
+                    <span class="col-stat-key">Moyenne</span>
+                    <span class="col-stat-val">53600.0000</span>
+                </div>
+            </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="section-header">
+                <span class="section-icon"></span>
+                <h2>Aperçu des données (10 record(s))</h2>
+            </div>
+            <div class="section-body" style="padding:0;">
+                <div class="table-wrapper">
+                    <table>
+                        <thead><tr><th>nom</th><th>age</th><th>departement</th><th>salaire</th><th>ville</th><th>mot_de_passe</th></tr></thead>
+                        <tbody><tr><td>Jean Mbarga</td><td>25</td><td>Informatique</td><td>50000</td><td>Douala</td><td>pass123</td></tr><tr><td>Marie Nkeng</td><td>30</td><td>RH</td><td>45000</td><td>Yaoundé</td><td>secret456</td></tr><tr><td>Paul Fotso</td><td>35</td><td>Informatique</td><td>55000</td><td>Bafoussam</td><td>qwerty</td></tr><tr><td>Aline Biya</td><td>28</td><td>Finance</td><td>48000</td><td>Douala</td><td>admin</td></tr><tr><td>Thomas Essola</td><td>40</td><td>Informatique</td><td>65000</td><td>Douala</td><td>pass789</td></tr><tr><td>Celine Ateba</td><td>32</td><td>RH</td><td>42000</td><td>Yaoundé</td><td>azerty</td></tr><tr><td>David Mvondo</td><td>27</td><td>Finance</td><td>46000</td><td>Bafoussam</td><td>motdepasse</td></tr><tr><td>Sarah Kom</td><td>29</td><td>Informatique</td><td>52000</td><td>Douala</td><td>123456</td></tr><tr><td>Felix Ngono</td><td>45</td><td>Direction</td><td>80000</td><td>Yaoundé</td><td>directeur</td></tr><tr><td>Ingrid Dang</td><td>31</td><td>Informatique</td><td>53000</td><td>Douala</td><td>ingrid31</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+        Rapport généré par <span>DataPipe</span> — Groupe 6 · ENSP Yaoundé 2024-2025
+    </div>
+    </div>
+</body>
+</html>

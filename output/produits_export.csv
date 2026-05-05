@@ -1,0 +1,4 @@
+en_promotion,id,prix,produit,category
+true,1,999.99,Laptop,Électronique
+true,3,79.99,Clavier,Accessoires
+true,5,9.99,Câble USB,Accessoires

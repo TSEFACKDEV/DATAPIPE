@@ -1,12 +1,5 @@
-<<<<<<< HEAD
 nom	departement	salaire	mot_de_passe
 Alice Martin	Informatique	5000	secret123
 Bob Dupont	Ressources Humaines	4000	pass456
 Charlie Bernard	Informatique	5500	pwd789
 Diana Leclerc	Finance	4500	secret999
-=======
-nom|age|ville|score
-Jean|25|Douala|88.5
-Marie|30|Yaoundé|92.0
-Paul|35|Bafoussam|76.3
->>>>>>> afb208890263851f330494ee011f7de6eaf2e375

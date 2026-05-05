@@ -1,0 +1,12 @@
+[
+  {
+    "departement": "Informatique",
+    "nom": "Alice Martin",
+    "salaire": 5000
+  },
+  {
+    "departement": "Informatique",
+    "nom": "Charlie Bernard",
+    "salaire": 5500
+  }
+]
